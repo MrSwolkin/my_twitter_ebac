@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-timeline">
+        <div class="profile-card">
+            <div class="profile-title">
+                {% if profile.image %}
+                <img class="profile-img" src="{{ profile.image.url }}" alt="">
+                {% else %}
+                <img class="profile-img" src="{% static 'img/user.png' %}" alt="">
+                {% endif %}
+                <h1>{{ profile.user.username }}</h1>
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    {% if profile in user.profile.follows.all %}
+                    <button class="button-follow" name="follow" value="unfollow" type="submit">Unfollow</button>
+                    {% else %}
+                    <button class="button-follow" name="follow" value="follow" type="submit">Follow</button>
+                    {% endif %}
+                </form>
+                <div>
+                    {% if profile.bio %}
+                    <h3>{{ profile.bio }}</h3>
+                    {% else %}
+                    <h3>...</h3>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="cards">
+            {% if tweets %}
+            <ul class="cards-list">
+                {% for tweet in tweets %}
+                <li class="cards-item">
+                    <div class="card-content">
+                        <div class="title">
+                            {% if tweet.user.profile.image %}
+                            <img class="avatar" src="{{ tweet.user.profile.image.url }}" alt="">
+                            {% else %}
+                            <img class="avatar" src="{% static 'img/user.png' %}" alt="">
+                            {% endif %}
+                            <h3>{{ tweet.user.username }}</h3>
+                        </div>
+                        <div class="post">
+                            <p>{{ tweet.body }}</p>
+                        </div>
+                        <i>{{ tweet.create_at }}</i>
+                        <a href="{% url 'delete' tweet.id %}">
+                            <i id="trash-icon" class='bx bx-trash'></i>
+                        </a>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <h2>{{ profile.user.username }} não possui Tweets.</h2>
+            {% endif %}
+        </div>
+    </div>
+    <div class="follows-column">
+        <div>
+            <h3>Seguindo</h3>
+            <ul>
+                {% for following in profile.follows.all %}
+                <li>
+                    <a href="{% url 'profile' following.user.id %}">@{{ following.user.username }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>Seguidores</h3>
+            <ul>
+                {% for follower in profile.followed_by.all %}
+                <li>
+                    <a href="{% url 'profile' follower.user.id %}">@{{ follower.user.username }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/update_user.css' %}">
+<div class="update-container">
+    <div></div>
+    <h1>Atualize o seu perfil</h1>
+    <form method="POST" enctype="multipart/form-data">
+    {% if user.profile.image %}
+    <img class="avatar-update" src="{{user.profile.image.url}}" alt="">
+    {% else %}
+    <img class="avatar-update" src="{% static 'img/user.png' %}" alt="">
+    {% endif %}
+        {% csrf_token %}
+        <div class="form-group">
+            </div>
+                {{ profile_form.bio.label_tag }}
+                {{ profile_form.bio }}
+            <div>
+            </div class="image-form">
+                {{ profile_form.image.label_tag }}
+                {{ profile_form.image }}
+            <div>
+            <br/>
+        </div>
+        <div class="form-group">
+            {% for field in user_form %}
+            <div class="form-field">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                <div class="error-text">
+                    {% for error in field.errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary">Atualizar</button>
+    </form>
+</div>
+{% endblock %}

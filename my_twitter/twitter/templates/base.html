@@ -1,0 +1,66 @@
+{% load static %}
+
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Twitter</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@100;400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            {% if user.is_authenticated %}
+            <div class="sidebar">
+                        {% if user.profile.image %}
+                        <img class="avatar-sidebar" src="{{user.profile.image.url}}" alt="Avatar">
+                        {% else %}
+                        <img class="avatar-sidebar" src="{% static 'img/user.png' %}" alt="Avatar">
+                        {% endif %}
+                <ul class="sidebar-list">
+                    <li>
+                        <a class="sidebar-link" href="{% url 'home' %}"><i class='bx bx-home'></i> Home</a>
+                    </li>
+                    <li>
+                        <a class="sidebar-link" href="{% url 'profile' user.id %}"><i class='bx bxs-face'></i>
+                            Perfil</a>
+                    </li>
+                    <li>
+                        <a class="sidebar-link" href="{% url 'profile_list' %}"><i class='bx bx-search-alt'></i>
+                            Explore</a>
+                    </li>
+                    <li>
+                        <a class="sidebar-link" href="{% url 'update_user' %}"><i class='bx bx-edit-alt'></i> Editar</a>
+                    </li>
+                    <li>
+                        <a class="sidebar-link" href="{% url 'logout' %}"><i class='bx bx-log-out'></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="main-content">
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="message alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                {% block content %}
+                {% endblock %}
+            </div>
+            {% else %}
+            {% include 'navbar.html' %}
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

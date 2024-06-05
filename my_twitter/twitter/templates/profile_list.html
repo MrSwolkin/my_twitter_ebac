@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/profile_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="listagem">
+    <h1>Conheça novas pessoas...</h1>
+    <div class="profile-list">
+        <ul>
+            {% if profiles %}
+            {% for profile in profiles %}
+            <li class="card-item">
+                <div class="card-content">
+                    <a href="{% url 'profile' profile.user.id %}">
+                        {% if profile.image %}
+                        <img class="avatar-profile-card" src="{{ profile.image.url }}"
+                            alt="{{ profile.user.username }}">
+                        {% else %}
+                        <img class="avatar-profile-card" src="{% static 'img/user.png' %}"
+                            alt="{{ profile.user.username }}">
+                        {% endif %}
+                    </a>
+                    <h3><a href="{% url 'profile' profile.user.id %}">@{{ profile.user.username }}</a></h3>
+                    <p>{{ profile.date_modified }}</p>
+                </div>
+            </li>
+            {% endfor %}
+            {% else %}
+            <li>
+                <p>Nenhum perfil encontrado.</p>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

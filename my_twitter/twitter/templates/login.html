@@ -1,0 +1,51 @@
+{% extends 'navbar.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+
+
+<div class="login-container">
+    <img src="{% static 'img/twitter-logo.png' %}" alt="">
+        <div>
+        <form  method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+            <h1>Login</h1>
+            <div class="input-content">
+                <input class="form-control" type="text" placeholder="Nome do usuário" type="text" name="username">
+                <input class="form-control" type="password" placeholder="senha" name="password">
+                <button type="submit" >Entrar</button>
+            </div>
+            <p><a href="#">Esqueci a senha</a></p>
+            </form>
+        </div>
+</div>
+
+{% endblock %}
+
+
+
+
+<!--
+
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            <h1>Cadastre-se</h1>
+            <div>
+            {{ form.as_p }}
+                
+                <button type="submit" >Cadastar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<input class="form-control" type="text" placeholder="Nome do usuário" name="username" required>
+                <input class="form-control" type="email" placeholder="Email" name="email" required>
+                <input class="form-control" type="senha" placeholder="Senha" name="password1" required>
+                <input class="form-control" type="senha" placeholder="confirme sua senha" name="password2" required>-->

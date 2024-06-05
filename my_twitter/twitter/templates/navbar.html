@@ -1,0 +1,27 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<header class="header">
+
+    <a href="#">
+        <h2><i class='bx bxl-twitter'></i></h2>
+    </a>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="message">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    <nav class="navbar">
+        <a href="{% url 'register' %}">Cadastre-se</a>
+        <a href="{% url 'login' %}">LOGIN</a>
+    </nav>
+</header>
+<body>
+    {% block content %}
+
+    {% endblock %}
+</body>

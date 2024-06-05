@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<div class="content-home">
+    <div class="form-container">
+        {% if form %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Postar</button>
+        </form>
+        {% endif %}
+    </div>
+
+    <h1>Veja o que está rolando!</h1>
+
+    <ul class="post-tweets">
+        {% for tweet in tweets %}
+        <li class="cards-item">
+            <div class="card-content">
+                <div class="card-header">
+                    {% if tweet.user.profile.image %}
+                    <img class="avatar" src="{{ tweet.user.profile.image.url }}" alt="">
+                    {% else %}
+                    <img class="avatar" src="{% static 'img/user.png' %}" alt="">
+                    {% endif %}
+                    <a href="{% url 'profile' tweet.user.id %}">
+                        <h5>@{{ tweet.user.username }}</h5>
+                    </a>
+                </div>
+                <div class="post">
+                    <p>{{ tweet.body }}</p>
+                </div>
+                <i>{{ tweet.create_at }}</i>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

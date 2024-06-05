@@ -1,0 +1,50 @@
+.register-container {
+    background-color: #1e272e;
+    border-radius: 10px;
+    max-width: 500px;
+    padding: 28px;
+    margin: auto;
+    box-shadow: 0 0 10px whitesmoke;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+input,
+button {
+    margin-top: 8px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+    width: 100%;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+span {
+    display: block;
+    margin-top: 20px;
+}
